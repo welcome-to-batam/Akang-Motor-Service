@@ -947,23 +947,6 @@
         });
     }
             </script>
-    
-    <!-- JAVASCRIPT UNTUK INTERAKSI MENU -->
-    <script>
-        function toggleMenu() {
-            document.getElementById('sideMenu').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-        }
-
-        // Pendaftaran Service Worker PWA (Relatif path untuk GitHub Pages)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('PWA Akang Motor Aktif!'))
-                    .catch(err => console.log('Gagal', err));
-            });
-        }
-    </script>
     <script>
         function openGallery() {
     toggleMenu(); // Tutup menu samping otomatis
@@ -994,6 +977,22 @@ function closeContact() {
     // Sembunyikan kembali halaman hubungi akang
     document.getElementById('contactModal').style.display = 'none';
 }
+    </script>
+    <!-- JAVASCRIPT UNTUK INTERAKSI MENU -->
+    <script>
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // Pendaftaran Service Worker PWA (Relatif path untuk GitHub Pages)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('PWA Akang Motor Aktif!'))
+                    .catch(err => console.log('Gagal', err));
+            });
+        }
     </script>
 </body>
 </html>
