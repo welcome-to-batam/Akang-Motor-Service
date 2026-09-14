@@ -74,27 +74,74 @@
             line-height: 1.6;
         }
 
-        /* --- FITUR & MENU LAYANAN --- */
-        .services-section { padding: 25px 20px; }
-        .services-section h2 { font-size: 18px; margin-bottom: 15px; border-left: 4px solid #d32f2f; padding-left: 10px; }
+                /* --- LAYANAN KAMI STYLE (WAHYU VERSION) --- */
+        .services-section { padding: 30px 20px; }
         
-        /* Mencerahkan background area di bawah layanan kami */
+        .services-intro {
+            text-align: center;
+            margin-bottom: 25px;
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #d32f2f;
+        }
+        .services-intro h2 { font-size: 18px; color: #d32f2f; margin-bottom: 5px; font-weight: 700; }
+        .services-intro h3 { font-size: 13px; color: #ffffff; margin-bottom: 10px; font-weight: 600; }
+        .services-intro p { font-size: 12px; color: #cccccc; line-height: 1.5; }
+
+        .services-header-title h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #d32f2f;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* Layout Grid 2 Kolom untuk HP agar Hemat Tempat */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
+            margin-bottom: 30px;
         }
         .service-card {
-            background-color: #2a2a2a; /* Dibuat lebih terang dari background utama */
+            background-color: #2a2a2a; /* Warna diperterang agar teks kontras */
             border: 1px solid #444;
             border-radius: 8px;
-            padding: 20px 15px;
+            padding: 15px 10px;
             text-align: center;
-            transition: 0.3s;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .service-card:active { transform: scale(0.95); border-color: #d32f2f; }
-        .service-card .icon { font-size: 28px; margin-bottom: 8px; }
-        .service-card p { font-size: 13px; font-weight: 600; color: #ffffff; }
+        .service-card:active { transform: scale(0.96); border-color: #d32f2f; }
+        .service-card .icon { font-size: 26px; margin-bottom: 6px; }
+        .service-card h4 { font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
+        .service-card p { font-size: 11px; color: #aaaaaa; line-height: 1.4; text-align: center; }
+
+        /* Bagian Footer Layanan */
+        .services-footer {
+            background-color: #1a1a1a;
+            padding: 20px 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px dashed #444;
+        }
+        .services-footer h3 { font-size: 14px; color: #d32f2f; margin-bottom: 4px; font-weight: 700; }
+        .services-footer .sub-footer-text { font-size: 12px; font-weight: 600; color: #ffffff; margin-bottom: 10px; }
+        .services-footer p { font-size: 12px; color: #cccccc; line-height: 1.5; margin-bottom: 15px; }
+
+        /* Banner Penutup Akang Motor */
+        .closing-banner {
+            border-top: 2px solid #d32f2f;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        .closing-banner h3 { color: #ffffff; font-size: 16px; margin-bottom: 2px; }
+        .closing-banner .quote { font-style: italic; color: #d32f2f; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+        .closing-tags { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: #999999; }
 
         /* --- TOMBOL AKSI UTAMA --- */
         .cta-container { padding: 10px 20px; text-align: center; }
@@ -348,25 +395,123 @@
         </p>
     </div>
 
-    <!-- MENU FITUR/LAYANAN -->
+        <!-- MENU FITUR/LAYANAN (WAHYU TERBARU) -->
     <div class="services-section">
-        <h2>Layanan Kami</h2>
+        <div class="services-intro">
+            <h2>🏍️ AKANG MOTOR SERVICE</h2>
+            <h3>🔧 Bengkel Motor — Siap Melayani Berbagai Jenis Kerusakan Motor</h3>
+            <p>Akang Motor melayani berbagai macam perawatan, perbaikan, dan servis sepeda motor, mulai dari kerusakan ringan hingga kerusakan berat.</p>
+        </div>
+
+        <div class="services-header-title">
+            <h2>🔧 LAYANAN KAMI</h2>
+        </div>
+
         <div class="services-grid">
             <div class="service-card">
                 <div class="icon">🛠️</div>
-                <p>Service Mesin</p>
-            </div>
-            <div class="service-card">
-                <div class="icon">⚡</div>
-                <p>Kelistrikan</p>
+                <h4>Service Mesin</h4>
+                <p>Perawatan dan perbaikan mesin motor agar kembali optimal.</p>
             </div>
             <div class="service-card">
                 <div class="icon">⚙️</div>
-                <p>Tune Up</p>
+                <h4>Tune Up</h4>
+                <p>Pengecekan dan penyetelan mesin secara menyeluruh.</p>
             </div>
             <div class="service-card">
                 <div class="icon">🛢️</div>
-                <p>Ganti Oli</p>
+                <h4>Ganti Oli</h4>
+                <p>Penggantian oli mesin dan pemeriksaan kondisi oli.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔥</div>
+                <h4>Service Karburator</h4>
+                <p>Membersihkan, menyetel, dan memperbaiki sistem karburator.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">⚡</div>
+                <h4>Kelistrikan Motor</h4>
+                <p>Perbaikan kabel, lampu, aki, starter, pengapian, sekring, dll.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔩</div>
+                <h4>Piston & Seher</h4>
+                <p>Pengecekan, penggantian, dan perbaikan piston/seher.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">⚙️</div>
+                <h4>Bubut & Perbaikan</h4>
+                <p>Pengerjaan komponen mesin yang butuh proses bubut khusus.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🛞</div>
+                <h4>Ganti Ban</h4>
+                <p>Penggantian ban depan/belakang serta cek kondisi ban.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔧</div>
+                <h4>Service CVT</h4>
+                <p>Perawatan dan perbaikan komponen CVT untuk motor matic.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">⛓️</div>
+                <h4>Rantai & Gear</h4>
+                <p>Pengecekan, penyetelan, dan penggantian rantai serta gear.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🛑</div>
+                <h4>Rem Motor</h4>
+                <p>Pemeriksaan dan perbaikan rem cakram maupun tromol.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔋</div>
+                <h4>Aki & Starter</h4>
+                <p>Pengecekan aki, sistem starter elektrik, dan starter motor.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">💡</div>
+                <h4>Lampu & Sein</h4>
+                <p>Perbaikan lampu utama, rem, sein, klakson, dan pendukung.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">⛽</div>
+                <h4>Sistem BBM</h4>
+                <p>Pemeriksaan dan perbaikan sistem serta saluran bensin.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🌡️</div>
+                <h4>Sistem Pendingin</h4>
+                <p>Pengecekan radiator, coolant, kipas, dan pendingin.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔊</div>
+                <h4>Knalpot</h4>
+                <p>Pemeriksaan dan perbaikan masalah pada sistem knalpot.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🛵</div>
+                <h4>Body & Komponen</h4>
+                <p>Perbaikan dan penggantian berbagai komponen pendukung body.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔍</div>
+                <h4>Cek & Diagnosa</h4>
+                <p>Pemeriksaan kondisi motor untuk mencari sumber masalah.</p>
+            </div>
+        </div>
+
+        <div class="services-footer">
+            <h3>🚨 MENERIMA SEGALA JENIS KERUSAKAN MOTOR</h3>
+            <p class="sub-footer-text">Dari kerusakan ringan hingga kerusakan berat.</p>
+            <p>Kami membantu menangani berbagai masalah motor, baik motor matic, bebek, maupun motor manual, sesuai jenis kerusakan dan kebutuhan perbaikan.</p>
+            
+            <div class="closing-banner">
+                <h3>🏍️ AKANG MOTOR</h3>
+                <p class="quote">“Motor Bermasalah? Serahkan Pada Kami!” 🔧</p>
+                <div class="closing-tags">
+                    <span>📍 Servis • Perawatan • Perbaikan • Diagnosa</span>
+                    <span>🔩 Kerusakan Ringan • Sedang • Berat</span>
+                </div>
             </div>
         </div>
     </div>
