@@ -447,12 +447,14 @@
     </div>
 </div>
 
+    <!-- JAVASCRIPT UNTUK INTERAKSI MENU -->
     <script>
         function toggleMenu() {
             document.getElementById('sideMenu').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
+        // Pendaftaran Service Worker PWA (Relatif path untuk GitHub Pages)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
@@ -461,16 +463,6 @@
             });
         }
     </script>
-    <sript>
-        //--- FUNGSI RIWAYAT SERVICE (PERBAIKAN) ---
-function openHistory() {
-    toggleMenu(); // Tutup menu samping otomatis
-    document.getElementById('historyModal').style.display = 'block';
-}
-function closeHistory() {
-    document.getElementById('historyModal').style.display = 'none';
-}
-    </sript>
     <script>
         function openContact() {
     // Tutup menu samping dulu biar tidak menumpuk
