@@ -962,6 +962,14 @@
             document.getElementById('avgStars').innerText = '⭐'.repeat(Math.round(avg));
         });
     }
+
+    function openReview() { 
+    toggleMenu(); 
+    document.getElementById('reviewModal').style.setProperty('display', 'block', 'important'); 
+}
+function closeReview() { 
+    document.getElementById('reviewModal').style.setProperty('display', 'none', 'important'); 
+}
     
         function openGallery() {
     toggleMenu(); // Tutup menu samping otomatis
