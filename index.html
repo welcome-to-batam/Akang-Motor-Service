@@ -308,6 +308,93 @@
 }
 .btn-write-review:active { background-color: #d32f2f; transform: scale(0.98); }
 
+        /* --- MODAL FULL SCREEN GALERY --- */
+.gallery-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #121212;
+    z-index: 300;
+    display: none; /* Sembunyi sebelum diklik */
+    overflow-y: auto;
+    padding: 30px 20px;
+}
+
+.close-gallery-btn {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none; border: none;
+    color: #ffffff; font-size: 28px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.close-gallery-btn:hover { color: #d32f2f; }
+
+.gallery-content {
+    max-width: 500px;
+    margin: 40px auto 0 auto;
+    text-align: center;
+}
+.gallery-content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.gallery-content .red-line {
+    width: 60px; height: 3px;
+    background-color: #d32f2f;
+    margin: 10px auto 15px auto;
+}
+.gallery-subtitle {
+    font-size: 13px;
+    color: #cccccc;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+/* Tata Letak Grid Foto 2 Kolom */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-bottom: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+    display: flex;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 150px; /* Membatasi tinggi agar seragam dan rapi */
+    object-fit: cover; /* Foto otomatis memotong proporsional tanpa gepeng */
+    transition: 0.3s ease;
+}
+
+/* Efek interaktif saat foto ditekan */
+.gallery-item:active img {
+    transform: scale(1.05);
+}
+
+/* Label kecil di pojok foto */
+.gallery-tag {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background-color: rgba(211, 47, 47, 0.85); /* Merah transparan khas Akang Motor */
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
         /* --- MODAL FULL SCREEN RIWAYAT SERVICE --- */
 .history-modal {
     position: fixed;
@@ -464,7 +551,7 @@
             <li><a href="#" onclick="toggleMenu()">🏠 Beranda</a></li>
             <li><a href="#" onclick="toggleMenu()">🛠️ Layanan Kami</a></li>
             <li><a href="#" onclick="openReview()">⭐ Ulasan Pelanggan</a></li>
-            <li><a href="#" onclick="toggleMenu()">📸 Galery</a></li>
+            <li><a href="#" onclick="openGallery()">📸 Galery</a></li>
             <li><a href="#" onclick="openHistory()">📝 Riwayat Service</a></li>
             <li><a href="#" onclick="openContact()">☎️ Hubungi Akang</a></li>
             
@@ -664,6 +751,47 @@
     </div>
 </div>
 
+    <!-- MODAL FULL SCREEN: GALERY BENGKEL -->
+<div id="galleryModal" class="gallery-modal">
+    <!-- Tombol Tutup di Pojok Kanan Atas -->
+    <button class="close-gallery-btn" onclick="closeGallery()">✕</button>
+    
+    <div class="gallery-content">
+        <h2>GALERY AKANG MOTOR</h2>
+        <div class="red-line"></div>
+        
+        <p class="gallery-subtitle">Dokumentasi hasil pengerjaan, ruang servis, dan bukti nyata kepuasan pelanggan kami.</p>
+
+        <!-- AREA GRID FOTO (Mengambil File dari GitHub Anda) -->
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="foto1.jpg" alt="Dokumentasi Akang Motor 1" onerror="this.parentElement.style.display='none'">
+                <div class="gallery-tag">Tune Up</div>
+            </div>
+            <div class="gallery-item">
+                <img src="foto2.jpg" alt="Dokumentasi Akang Motor 2" onerror="this.parentElement.style.display='none'">
+                <div class="gallery-tag">Ganti Ban</div>
+            </div>
+            <div class="gallery-item">
+                <img src="foto3.jpg" alt="Dokumentasi Akang Motor 3" onerror="this.parentElement.style.display='none'">
+                <div class="gallery-tag">Service CVT</div>
+            </div>
+            <div class="gallery-item">
+                <img src="foto4.jpg" alt="Dokumentasi Akang Motor 4" onerror="this.parentElement.style.display='none'">
+                <div class="gallery-tag">Overhaul</div>
+            </div>
+            <div class="gallery-item">
+                <img src="foto5.jpg" alt="Dokumentasi Akang Motor 5" onerror="this.parentElement.style.display='none'">
+                <div class="gallery-tag">Kelisrtikan</div>
+            </div>
+            <div class="gallery-item">
+                <img src="foto6.jpg" alt="Dokumentasi Akang Motor 6" onerror="this.parentElement.style.display='none'">
+                <div class="gallery-tag">Selesai Servis</div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- MODAL FULL SCREEN: RIWAYAT SERVICE -->
 <div id="historyModal" class="history-modal">
     <!-- Tombol Tutup di Pojok Kanan Atas -->
@@ -759,6 +887,15 @@
 
 function closeReview() {
     document.getElementById('reviewModal').style.display = 'none';
+}
+
+        function openGallery() {
+    toggleMenu(); // Tutup menu samping otomatis
+    document.getElementById('galleryModal').style.display = 'block';
+}
+
+function closeGallery() {
+    document.getElementById('galleryModal').style.display = 'none';
 }
         
         function openHistory() {
