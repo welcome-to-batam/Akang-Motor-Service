@@ -3,8 +3,8 @@
   "short_name": "AkangMotor",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ff9900",
+  "background_color": "#121212",
+  "theme_color": "#d32f2f",
   "description": "Solusi perawatan dan servis motor terbaik.",
   "icons": [
     {
