@@ -980,28 +980,23 @@ function closeGallery() {
     document.getElementById('galleryModal').style.setProperty('display', 'none', 'important'); 
 }
         
-        function openHistory() {
-    toggleMenu(); // Tutup menu samping
-    document.getElementById('historyModal').style.display = 'block'; // Buka halaman riwayat
+    // Fungsi Riwayat Service
+function openHistory() { 
+    toggleMenu(); 
+    document.getElementById('historyModal').style.setProperty('display', 'block', 'important'); 
 }
-
-function closeHistory() {
-    document.getElementById('historyModal').style.display = 'none'; // Tutup halaman riwayat
+function closeHistory() { 
+    document.getElementById('historyModal').style.setProperty('display', 'none', 'important'); 
 }
         
-        function openContact() {
-    // Tutup menu samping dulu biar tidak menumpuk
+    // Fungsi Hubungi Akang
+function openContact() { 
     toggleMenu(); 
-    // Tampilkan halaman hubungi akang full screen
-    document.getElementById('contactModal').style.display = 'block';
+    document.getElementById('contactModal').style.setProperty('display', 'block', 'important'); 
 }
-
-function closeContact() {
-    // Sembunyikan kembali halaman hubungi akang
-    document.getElementById('contactModal').style.display = 'none';
+function closeContact() { 
+    document.getElementById('contactModal').style.setProperty('display', 'none', 'important'); 
 }
-    
-    <!-- JAVASCRIPT UNTUK INTERAKSI MENU -->
         function toggleMenu() {
             document.getElementById('sideMenu').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
