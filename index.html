@@ -464,6 +464,15 @@
         }
     </script>
     <script>
+        function openHistory() {
+    toggleMenu(); // Tutup menu samping
+    document.getElementById('historyModal').style.display = 'block'; // Buka halaman riwayat
+}
+
+function closeHistory() {
+    document.getElementById('historyModal').style.display = 'none'; // Tutup halaman riwayat
+}
+        
         function openContact() {
     // Tutup menu samping dulu biar tidak menumpuk
     toggleMenu(); 
