@@ -221,92 +221,63 @@
         }
         .overlay.active { display: block; }
 
-        /* --- MODAL FULL SCREEN ULASAN PELANGGAN --- */
-.review-modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: #121212;
-    z-index: 300;
-    display: none; /* Sembunyi sebelum diklik */
-    overflow-y: auto;
-    padding: 30px 20px;
-}
-
-.close-review-btn {
-    position: absolute;
-    top: 20px; right: 20px;
-    background: none; border: none;
-    color: #ffffff; font-size: 28px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.close-review-btn:hover { color: #d32f2f; }
-
-.review-content {
-    max-width: 500px;
-    margin: 40px auto 0 auto;
-}
-.review-content h2 {
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 1px;
-}
-.review-content .red-line {
-    width: 60px; height: 3px;
-    background-color: #d32f2f;
-    margin: 10px auto 25px auto;
-}
-
-/* Ringkasan Nilai Bintang */
-.rating-summary {
-    text-align: center;
+        /* --- GAYA FORMULIR ULASAN FIREBASE --- */
+.review-form-container {
     background-color: #1a1a1a;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 25px;
-    border: 1px solid #333;
+    border: 1px solid #d32f2f;
 }
-.rating-number { font-size: 48px; font-weight: 700; color: #ffffff; }
-.rating-summary .stars { font-size: 20px; margin: 5px 0; }
-.total-reviews { font-size: 13px; color: #aaaaaa; }
-
-/* Daftar Kartu Ulasan */
-.review-list { margin-bottom: 30px; }
-.review-card {
-    background-color: #2a2a2a; /* Warna terang kontras untuk kartu */
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-.review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-.customer-name { font-size: 14px; font-weight: 600; color: #ffffff; }
-.customer-stars { font-size: 12px; }
-.review-text { font-size: 13px; color: #cccccc; line-height: 1.5; text-align: left; }
-.review-date { display: block; font-size: 11px; color: #777777; margin-top: 8px; text-align: right; }
-
-/* Tombol Aksi Tulis Ulasan */
-.write-review-container { text-align: center; }
-.btn-write-review {
-    background-color: transparent;
-    color: #ffffff;
-    border: 2px solid #d32f2f;
-    width: 100%;
-    padding: 12px;
+.review-form-container h3 {
     font-size: 15px;
-    font-weight: 600;
-    border-radius: 8px;
+    margin-bottom: 12px;
+    color: #ffffff;
+    text-align: center;
+}
+.review-form-container input[type="text"], 
+.review-form-container textarea {
+    width: 100%;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.review-form-container input:focus, 
+.review-form-container textarea:focus {
+    border-color: #d32f2f;
+    outline: none;
+}
+/* Sistem Pilih Bintang */
+.star-rating-input {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 26px;
     cursor: pointer;
+}
+.star-input {
+    color: #444;
     transition: 0.2s;
 }
-.btn-write-review:active { background-color: #d32f2f; transform: scale(0.98); }
+.star-input.active, .star-input:hover {
+    color: #ffcc00; /* Warna emas bintang aktif */
+}
+/* Tombol Submit */
+.btn-submit-review {
+    width: 100%;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.btn-submit-review:active { background-color: #b71c1c; }
 
         /* --- MODAL FULL SCREEN GALERY --- */
 .gallery-modal {
@@ -695,62 +666,46 @@
         <button class="btn-booking" onclick="alert('🛵🏍️FITUR PROMO AKANG MOTOR BELUM TERSEDIA!🏍️🛵')">PROMO Akang Motor</button>
     </div>
 
-    <!-- MODAL FULL SCREEN: ULASAN PELANGGAN -->
+    <!-- MODAL FULL SCREEN: ULASAN PELANGGAN (VERSI FIREBASE) -->
 <div id="reviewModal" class="review-modal">
-    <!-- Tombol Tutup di Pojok Kanan Atas -->
     <button class="close-review-btn" onclick="closeReview()">✕</button>
     
     <div class="review-content">
         <h2>ULASAN PELANGGAN</h2>
         <div class="red-line"></div>
         
-        <!-- AREA RATING RINGKASAN -->
+        <!-- AREA RATING RINGKASAN DINAMIS -->
         <div class="rating-summary">
-            <div class="rating-number">4.9</div>
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <div class="total-reviews">Berdasarkan 150+ Pelanggan Puas</div>
+            <div class="rating-number" id="avgRating">0.0</div>
+            <div class="stars" id="avgStars">⭐⭐⭐⭐⭐</div>
+            <div class="total-reviews" id="totalReviewsCount">Memuat ulasan...</div>
         </div>
 
-        <!-- DAFTAR KARTU ULASAN (TESTIMONI) -->
-        <div class="review-list">
-            <!-- Ulasan 1 -->
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="customer-name">Budi Santoso</span>
-                    <span class="customer-stars">⭐⭐⭐⭐⭐</span>
-                </div>
-                <p class="review-text">"Servis mesin dan tune up di sini mantap betul. Motor matic saya yang tadinya lemot sekarang tarikannya jadi enteng lagi kayak baru. Sukses terus Akang Motor!"</p>
-                <span class="review-date">2 hari yang lalu</span>
+        <!-- FORMULIR INPUT ULASAN BARU -->
+        <div class="review-form-container">
+            <h3>Tulis Ulasan Anda</h3>
+            <input type="text" id="reviewerName" placeholder="Nama Anda" required>
+            
+            <div class="star-rating-input">
+                <span class="star-input" onclick="setRating(1)">★</span>
+                <span class="star-input" onclick="setRating(2)">★</span>
+                <span class="star-input" onclick="setRating(3)">★</span>
+                <span class="star-input" onclick="setRating(4)">★</span>
+                <span class="star-input" onclick="setRating(5)">★</span>
             </div>
+            <input type="hidden" id="reviewRatingValue" value="5">
 
-            <!-- Ulasan 2 -->
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="customer-name">Rian Hidayat</span>
-                    <span class="customer-stars">⭐⭐⭐⭐⭐</span>
-                </div>
-                <p class="review-text">"Pengerjaan kelistrikan rapi banget, montirnya ramah dan jelasin kerusakannya detail sebelum dibongkar. Harga bersahabat banget untuk kantong."</p>
-                <span class="review-date">1 minggu yang lalu</span>
-            </div>
-
-            <!-- Ulasan 3 -->
-            <div class="review-card">
-                <div class="review-header">
-                    <span class="customer-name">Siti Aminah</span>
-                    <span class="customer-stars">⭐⭐⭐⭐⭐</span>
-                </div>
-                <p class="review-text">"Ganti oli dan cek CVT cepet banget gak pakai ngantre lama. Tempatnya bersih dan terpercaya. Bakal jadi langganan servis rutin di sini."</p>
-                <span class="review-date">2 minggu yang lalu</span>
-            </div>
+            <textarea id="reviewerText" placeholder="Tulis pengalaman servis Anda di Akang Motor..." rows="3" required></textarea>
+            <button class="btn-submit-review" onclick="kirimUlasanKeFirebase()">Kirim Ulasan</button>
         </div>
 
-        <!-- TOMBOL UNTUK TULIS ULASAN BARU -->
-        <div class="write-review-container">
-            <button class="btn-write-review" onclick="alert('Fitur Formulir Ulasan Baru Segera Hadir!')">Tulis Ulasan Anda</button>
+        <!-- DAFTAR KARTU ULASAN DARI FIREBASE -->
+        <div class="review-list" id="firebaseReviewList">
+            <!-- Data dari Firebase akan disuntikkan secara otomatis di sini -->
         </div>
     </div>
 </div>
-
+    
     <!-- MODAL FULL SCREEN: GALERY BENGKEL -->
 <div id="galleryModal" class="gallery-modal">
     <!-- Tombol Tutup di Pojok Kanan Atas -->
@@ -863,6 +818,136 @@
     </div>
 </div>
 
+    <!-- SDK FIREBASE (Menggunakan Versi CDN Lightweight yang kompatibel dengan PWA) -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+
+<script>
+    // 1. ISI KONFIGURASI DARI FIREBASE CONSOLE ANDA DI SINI
+    const firebaseConfig = {
+        apiKey: "ISI_API_KEY_ANDA_DI_SINI",
+        authDomain: "://firebaseapp.com",
+        databaseURL: "https://firebaseio.com", // Ganti dengan URL Realtime Database Anda
+        projectId: "akang-motor",
+        storageBucket: "://appspot.com",
+        messagingSenderId: "1234567890",
+        appId: "1:1234567890:web:abcdef123456"
+    };
+    
+    // Inisialisasi Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const database = firebase.database();
+
+    // Jalankan fungsi memuat ulasan saat halaman pertama kali dibuka
+    document.addEventListener("DOMContentLoaded", () => {
+        loadUlasanDariFirebase();
+    });
+
+    // Sistem interaksi memilih bintang input
+    let selectedRating = 5;
+    function setRating(rating) {
+        selectedRating = rating;
+        document.getElementById('reviewRatingValue').value = rating;
+        const stars = document.querySelectorAll('.star-input');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+    // Set default bintang menjadi 5 aktif saat awal
+    setRating(5);
+
+    // 2. FUNGSI KIRIM DATA KE CLOUD FIREBASE
+    function kirimUlasanKeFirebase() {
+        const nama = document.getElementById('reviewerName').value.trim();
+        const teks = document.getElementById('reviewerText').value.trim();
+        const rating = parseInt(document.getElementById('reviewRatingValue').value);
+        const tanggal = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+
+        if (!nama || !teks) {
+            alert("Harap isi nama dan kolom ulasan Anda, Bos!");
+            return;
+        }
+
+        // Menyimpan data ke node 'ulasan' di Firebase
+        const ulasanRef = database.ref('ulasan');
+        const ulasanBaruRef = ulasanRef.push();
+        ulasanBaruRef.set({
+            nama: nama,
+            teks: teks,
+            rating: rating,
+            tanggal: tanggal,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        }).then(() => {
+            alert("Mantap, ulasan berhasil dikirim!");
+            // Reset Form setelah sukses
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewerText').value = '';
+            setRating(5);
+        }).catch((error) => {
+            alert("Gagal mengirim ulasan: " + error.message);
+        });
+    }
+
+    // 3. FUNGSI TARIK DATA SECARA REAL-TIME DARI FIREBASE
+    function loadUlasanDariFirebase() {
+        const ulasanRef = database.ref('ulasan').orderByChild('timestamp');
+        
+        ulasanRef.on('value', (snapshot) => {
+            const listContainer = document.getElementById('firebaseReviewList');
+            listContainer.innerHTML = ''; // Bersihkan loader
+
+            if (!snapshot.exists()) {
+                listContainer.innerHTML = '<p style="text-align:center; color:#777;">Belum ada ulasan. Jadilah yang pertama!</p>';
+                document.getElementById('totalReviewsCount').innerText = "Berdasarkan 0 Pelanggan";
+                return;
+            }
+
+            let totalRating = 0;
+            let count = 0;
+            let htmlContent = '';
+
+            // Looping data dari Firebase (diurutkan dari yang paling baru)
+            const ulasans = [];
+            snapshot.forEach((childSnapshot) => {
+                ulasans.unshift({ id: childSnapshot.key, ...childSnapshot.val() });
+            });
+
+            ulasans.forEach((data) => {
+                totalRating += data.rating;
+                count++;
+
+                let bintangString = '⭐'.repeat(data.rating);
+
+                htmlContent += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="customer-name">${data.nama}</span>
+                            <span class="customer-stars">${bintangString}</span>
+                        </div>
+                        <p class="review-text">"${data.teks}"</p>
+                        <span class="review-date">${data.tanggal}</span>
+                    </div>
+                `;
+            });
+
+            // Suntik ulasan ke dalam HTML
+            listContainer.innerHTML = htmlContent;
+
+            // Hitung rata-rata rating secara otomatis & dinamis
+            const avg = (totalRating / count).toFixed(1);
+            document.getElementById('avgRating').innerText = avg;
+            document.getElementById('totalReviewsCount').innerText = `Berdasarkan ${count} Pelanggan Puas`;
+            document.getElementById('avgStars').innerText = '⭐'.repeat(Math.round(avg));
+        });
+    }
+            </script>
+    
     <!-- JAVASCRIPT UNTUK INTERAKSI MENU -->
     <script>
         function toggleMenu() {
@@ -880,15 +965,6 @@
         }
     </script>
     <script>
-        function openReview() {
-    toggleMenu(); // Tutup menu samping otomatis
-    document.getElementById('reviewModal').style.display = 'block';
-}
-
-function closeReview() {
-    document.getElementById('reviewModal').style.display = 'none';
-}
-
         function openGallery() {
     toggleMenu(); // Tutup menu samping otomatis
     document.getElementById('galleryModal').style.display = 'block';
