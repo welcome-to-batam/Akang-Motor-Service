@@ -5,32 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akang Motor</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff9900">
+    <meta name="theme-color" content="#d32f2f">
+    <!-- Menggunakan Font Bagus Google Font -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; margin: 0; padding: 20px; }
-        .container { background: white; padding: 30px; border-radius: 10px; max-width: 400px; margin: 50px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #ff9900; }
-        button { background: #ff9900; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        /* --- RESET & UTAMA (Tema Hitam-Merah) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background-color: #121212; color: #ffffff; padding-bottom: 30px; }
+
+        /* --- HEADER --- */
+        header {
+            background-color: #1a1a1a;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #d32f2f;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-container img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #d32f2f;
+            object-fit: cover;
+        }
+        .menu-hamburger {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* --- BANNER BACKGROUND --- */
+        .hero-banner {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(18, 18, 18, 1)), url('motor1.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        /* --- DESKRIPSI UTAMA --- */
+        .main-info {
+            padding: 0 20px;
+            text-align: center;
+            margin-top: -30px; /* Membuat teks agak naik sedikit ke area banner */
+        }
+        .main-info h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        .main-info h1 span { color: #d32f2f; }
+        .main-info .tagline {
+            font-size: 14px;
+            color: #b3b3b3;
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        /* --- FITUR & MENU LAYANAN --- */
+        .services-section { padding: 25px 20px; }
+        .services-section h2 { font-size: 18px; margin-bottom: 15px; border-left: 4px solid #d32f2f; padding-left: 10px; }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .service-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .service-card:active { transform: scale(0.95); border-color: #d32f2f; }
+        .service-card .icon { font-size: 24px; margin-bottom: 5px; }
+        .service-card p { font-size: 12px; font-weight: 600; color: #e0e0e0; }
+
+        /* --- TOMBOL AKSI UTAMA --- */
+        .cta-container { padding: 10px 20px; text-align: center; }
+        .btn-booking {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(211, 47, 47, 0.4);
+            transition: 0.2s;
+        }
+        .btn-booking:active { background-color: #b71c1c; }
+
+        /* --- MENU DROPDOWN (Samping/Navigasi) --- */
+        .side-menu {
+            position: fixed;
+            top: 0; right: -250px;
+            width: 250px; height: 100%;
+            background-color: #1a1a1a;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
+            z-index: 200;
+            padding: 20px;
+        }
+        .side-menu.active { right: 0; }
+        .side-menu .close-btn {
+            background: none; border: none; color: white; font-size: 24px; float: right; cursor: pointer;
+        }
+        .side-menu ul { list-style: none; margin-top: 60px; }
+        .side-menu ul li { padding: 15px 0; border-bottom: 1px solid #333; }
+        .side-menu ul li a { color: white; text-decoration: none; font-size: 16px; display: block; }
+        .side-menu ul li a:hover { color: #d32f2f; }
+        .overlay {
+            position: fixed; display: none; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 150;
+        }
+        .overlay.active { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Akang Motor</h1>
-        <p>Selamat datang di aplikasi Akang Motor. Siap melayani servis dan kebutuhan motor Anda!</p>
-        <button onclick="alert('Fitur Booking Segera Hadir!')">Booking Servis</button>
+    <!-- HEADER -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo Akang Motor">
+        </div>
+        <!-- Simbol Garis Tiga (Hamburger Menu) -->
+        <button class="menu-hamburger" onclick="toggleMenu()">☰</button>
+    </header>
+
+    <!-- SIDE NAV MENU -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <button class="close-btn" onclick="toggleMenu()">✕</button>
+        <ul>
+            <li><a href="#">Beranda</a></li>
+            <li><a href="#">Layanan Kami</a></li>
+            <li><a href="#">Riwayat Servis</a></li>
+            <li><a href="#">Hubungi Akang</a></li>
+        </ul>
     </div>
 
+    <!-- BACKGROUND FOTO MOTOR -->
+    <div class="hero-banner"></div>
+
+    <!-- KETERANGAN & DESKRIPSI -->
+    <div class="main-info">
+        <h1>AKANG <span>MOTOR</span></h1>
+        <p class="tagline">
+            <strong>Motor Anda Prioritas Kami!</strong> Akang Motor melayani berbagai macam kebutuhan kendaraan Anda mulai dari service mesin rutin, perbaikan kelistrikan, perawatan bodi, tune-up, ganti oli berkala, hingga penggantian sparepart berkualitas tinggi untuk semua jenis motor.
+        </p>
+    </div>
+
+    <!-- MENU FITUR/LAYANAN (Diadopsi dari Icon Spanduk Anda) -->
+    <div class="services-section">
+        <h2>Layanan Kami</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="icon">🛠️</div>
+                <p>Service Mesin</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">⚡</div>
+                <p>Kelistrikan</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">⚙️</div>
+                <p>Tune Up</p>
+            </div>
+            <div class="service-card">
+                <div class="icon">🛢️</div>
+                <p>Ganti Oli</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOMBOL BOOKING UTAMA -->
+    <div class="cta-container">
+        <button class="btn-booking" onclick="alert('Fitur Form Booking Segera Hadir!')">Booking Servis Sekarang</button>
+    </div>
+
+    <!-- JAVASCRIPT UNTUK INTERAKSI MENU -->
     <script>
-        // Mendaftarkan Service Worker agar PWA aktif
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // Pendaftaran Service Worker PWA (Relatif path untuk GitHub Pages)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker Terdaftar!', reg))
-                    .catch(err => console.log('Gagal Daftar Service Worker', err));
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('PWA Akang Motor Aktif!', reg))
+                    .catch(err => console.log('Gagal mengaktifkan PWA', err));
             });
         }
     </script>
 </body>
 </html>
-
