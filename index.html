@@ -173,6 +173,76 @@
             background-color: #d32f2f; 
         }
         .overlay.active { display: block; }
+
+        /* --- MODAL FULL SCREEN HUBUNGI AKANG --- */
+.contact-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #121212; /* Warna dasar gelap yang konsisten */
+    z-index: 300; /* Paling atas mengalahkan menu samping */
+    display: none; /* Sembunyi sebelum diklik */
+    overflow-y: auto; /* Bisa di-scroll kalau layar HP pendek */
+    padding: 30px 20px;
+}
+
+.close-contact-btn {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none; border: none;
+    color: #ffffff; font-size: 28px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.close-contact-btn:hover { color: #d32f2f; }
+
+.contact-content {
+    max-width: 500px;
+    margin: 40px auto 0 auto;
+    text-align: center;
+}
+.contact-content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.contact-content .red-line {
+    width: 60px; height: 3px;
+    background-color: #d32f2f;
+    margin: 10px auto 25px auto;
+}
+
+/* Kartu Informasi */
+.contact-card {
+    background-color: #2a2a2a; /* Lebih terang agar teks di dalamnya terbaca jelas */
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.contact-icon { font-size: 32px; margin-bottom: 8px; }
+.contact-card h3 { font-size: 16px; margin-bottom: 5px; color: #ffffff; }
+.contact-card p { font-size: 13px; color: #cccccc; margin-bottom: 15px; line-height: 1.5; }
+
+/* Tombol Aksi Tautan */
+.contact-link-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #444;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    width: 100%;
+    transition: 0.2s;
+}
+.contact-link-btn:active { transform: scale(0.98); }
+.wa-btn { background-color: #25d366; } /* Warna hijau khas WA */
+.wa-btn:active { background-color: #1ebd58; }
+.email-btn { background-color: #ea4335; } /* Warna merah khas Gmail */
+.email-btn:active { background-color: #d93025; }
     </style>
 </head>
 <body>
@@ -198,7 +268,8 @@
             <li><a href="#" onclick="toggleMenu()">⭐ Ulasan Pelanggan</a></li>
             <li><a href="#" onclick="toggleMenu()">📸 Galery</a></li>
             <li><a href="#" onclick="toggleMenu()">📝 Riwayat Service</a></li>
-            <li><a href="#" onclick="toggleMenu()">☎️ Hubungi Akang</a></li>
+            <li><a href="#" onclick="openContact()">☎️ Hubungi Akang</a></li>
+            
         </ul>
     </div>
 
@@ -241,6 +312,44 @@
         <button class="btn-booking" onclick="alert('Fitur Form Booking Segera Hadir!')">Booking Servis Sekarang</button>
     </div>
 
+    <!-- MODAL FULL SCREEN: HUBUNGI AKANG -->
+<div id="contactModal" class="contact-modal">
+    <!-- Tombol Tutup di Pojok Kanan Atas -->
+    <button class="close-contact-btn" onclick="closeContact()">✕</button>
+    
+    <div class="contact-content">
+        <h2>HUBUNGI AKANG</h2>
+        <div class="red-line"></div>
+        
+        <!-- BAGIAN 1: ALAMAT (PALING ATAS) -->
+        <div class="contact-card">
+            <div class="contact-icon">📍</div>
+            <h3>Alamat Bengkel</h3>
+            <p>Jl. Engku Putri, Batam Kota, Kota Batam, Kepulauan Riau (Sebelah Ruko Bisnis)</p>
+            <!-- Opsional: Tombol Buka Maps -->
+            <a href="https://google.com" target="_blank" class="contact-link-btn">Buka Google Maps</a>
+        </div>
+
+        <!-- BAGIAN 2: WHATSAPP -->
+        <div class="contact-card">
+            <div class="contact-icon">💬</div>
+            <h3>WhatsApp</h3>
+            <p>Konsultasi cepat dan booking lewat chat admin Akang Motor.</p>
+            <!-- Ganti nomor di bawah dengan nomor WhatsApp Anda -->
+            <a href="https://wa.me" target="_blank" class="contact-link-btn wa-btn">Chat WhatsApp</a>
+        </div>
+
+        <!-- BAGIAN 3: EMAIL (DIARAHKAN KE GMAIL) -->
+        <div class="contact-card">
+            <div class="contact-icon">✉️</div>
+            <h3>Email</h3>
+            <p>Kirim pertanyaan resmi atau kerja sama bisnis.</p>
+            <!-- Ganti dengan email asli bengkel Anda -->
+            <a href="mailto:akangmotor@://gmail.com" class="contact-link-btn email-btn">Kirim ke Gmail</a>
+        </div>
+    </div>
+</div>
+
     <script>
         function toggleMenu() {
             document.getElementById('sideMenu').classList.toggle('active');
@@ -254,6 +363,19 @@
                     .catch(err => console.log('Gagal', err));
             });
         }
+    </script>
+    <script>
+        function openContact() {
+    // Tutup menu samping dulu biar tidak menumpuk
+    toggleMenu(); 
+    // Tampilkan halaman hubungi akang full screen
+    document.getElementById('contactModal').style.display = 'block';
+}
+
+function closeContact() {
+    // Sembunyikan kembali halaman hubungi akang
+    document.getElementById('contactModal').style.display = 'none';
+}
     </script>
 </body>
 </html>
