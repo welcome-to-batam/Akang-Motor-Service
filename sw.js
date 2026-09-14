@@ -1,4 +1,4 @@
-const CACHE_NAME = 'akang-motor-v31';
+const CACHE_NAME = 'akang-motor-v32';
 const ASSETS = [
   '/',
   '/index.html',
