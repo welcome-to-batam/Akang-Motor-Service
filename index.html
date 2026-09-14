@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akang Motor</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff9900">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; margin: 0; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 10px; max-width: 400px; margin: 50px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #ff9900; }
+        button { background: #ff9900; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Akang Motor</h1>
+        <p>Selamat datang di aplikasi Akang Motor. Siap melayani servis dan kebutuhan motor Anda!</p>
+        <button onclick="alert('Fitur Booking Segera Hadir!')">Booking Servis</button>
+    </div>
+
+    <script>
+        // Mendaftarkan Service Worker agar PWA aktif
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker Terdaftar!', reg))
+                    .catch(err => console.log('Gagal Daftar Service Worker', err));
+            });
+        }
+    </script>
+</body>
+</html>
+
