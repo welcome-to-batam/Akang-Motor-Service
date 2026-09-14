@@ -970,14 +970,14 @@
 function closeReview() { 
     document.getElementById('reviewModal').style.setProperty('display', 'none', 'important'); 
 }
-    
-        function openGallery() {
-    toggleMenu(); // Tutup menu samping otomatis
-    document.getElementById('galleryModal').style.display = 'block';
-}
 
-function closeGallery() {
-    document.getElementById('galleryModal').style.display = 'none';
+    // Fungsi Galery
+function openGallery() { 
+    toggleMenu(); 
+    document.getElementById('galleryModal').style.setProperty('display', 'block', 'important'); 
+}
+function closeGallery() { 
+    document.getElementById('galleryModal').style.setProperty('display', 'none', 'important'); 
 }
         
         function openHistory() {
