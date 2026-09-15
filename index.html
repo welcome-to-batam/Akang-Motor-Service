@@ -852,21 +852,20 @@ header {
     </div>
 </div>
 
-    <!-- SDK FIREBASE (Menggunakan Versi CDN Lightweight yang kompatibel dengan PWA) -->
+<!-- ✅ SDK Realtime Database -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-    
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
-    // 1. ISI KONFIGURASI DARI FIREBASE CONSOLE ANDA DI SINI
-    const firebaseConfig = {
-  apiKey: "AIzaSyBoJOaETpFPP62EBoVkdOICd3WLQ060V6c",
-  authDomain: "akang-motor-service.firebaseapp.com",
-  databaseURL: "https://firebasedatabase.app",
-  projectId: "akang-motor-service",
-  storageBucket: "akang-motor-service.firebasestorage.app",
-  messagingSenderId: "459897791553",
-  appId: "1:459897791553:web:2647dbe71d32f5cc9952c0"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyBoJOaETpFPP62EBoVkdOICd3WLQ060V6c",
+    authDomain: "akang-motor-service.firebaseapp.com",
+    databaseURL: "https://akang-motor-service-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "akang-motor-service",
+    storageBucket: "akang-motor-service.firebasestorage.app",
+    messagingSenderId: "459897791553",
+    appId: "1:459897791553:web:2647dbe71d32f5cc9952c0"
+  };
     
     // Inisialisasi Firebase
     if (!firebase.apps.length) {
