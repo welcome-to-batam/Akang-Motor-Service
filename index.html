@@ -360,6 +360,19 @@ header {
 }
 .btn-submit-review:active { background-color: #b71c1c; }
 
+    /* --- KODE KUNCI UNTUK MENGHANCURKAN WARNA PUTIH PADA KOTAK NAMA & ISI --- */
+.review-form-container {
+    background-color: #2a2a2a !important; /* Kotak besar atas jadi abu gelap */
+}
+
+.review-form-container input[type="text"], 
+.review-form-container textarea {
+    background-color: #1e1e1e !important; /* Kotak "Nama Anda" dipaksa jadi hitam pekat */
+    color: #ffffff !important;            /* Teks yang diketik otomatis jadi putih */
+    border: 1px solid #444 !important;    /* Garis pinggir kotak jadi abu-abu gelap rapi */
+    width: 100% !important;               /* Kotak melebar penuh dan rapi */
+}
+
         /* --- MODAL FULL SCREEN GALERY --- */
 .gallery-modal {
     position: fixed;
