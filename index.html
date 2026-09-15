@@ -21,28 +21,29 @@
     100% { background-position: 0% 50%; }
 }
 
-/* Style header dengan animasi warna */
 header {
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid #d32f2f;
+    border-bottom: 3px solid #8B0000; /* Ganti border merah terang ke merah gelap */
     position: sticky;
     top: 0;
     z-index: 100;
 
-    background: linear-gradient(-45deg, #8B0000, #FF0000, #FF4500, #333333);
+    /* Gradien dengan warna gelap dominan dan sedikit merah */
+    background: linear-gradient(-45deg, #121212, #1c1c1c, #8B0000, #2a2a2a);
     background-size: 400% 400%;
-    animation: gradientFlow 8s ease infinite;
+    animation: gradientFlow 10s ease infinite;
 
-    color: white; /* Agar teks terlihat jelas */
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
     font-size: 18px;
     -webkit-font-smoothing: antialiased;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 }
+
         /* PERBAIKAN LOGO: Supaya bulat sempurna & tidak gepeng */
         .logo-container {
             display: flex;
