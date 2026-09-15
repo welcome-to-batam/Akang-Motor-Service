@@ -1362,23 +1362,43 @@ function ketukLogoAdmin() {
 
 function tutupLoginAdmin() { document.getElementById('adminLoginModal').style.display = 'none'; }
 
-// --- PROSES AUTHENTICATION LOGIN ADMIN ---
+// --- VARIABEL GLOBAL UNTUK MENGUNCI MEMORI KUNCI AMAN DI HP ---
+let passwordAdminAktif = ""; 
+
+// --- PROSES AUTHENTICATION LOGIN ADMIN SECARA AMAN (ANTI HACKER) ---
 function prosesLoginAdmin() {
     const email = document.getElementById('adminEmail').value.trim();
-    const password = document.getElementById('adminPassword').value.trim();
+    const passwordInput = document.getElementById('adminPassword').value.trim();
 
-    // Atur Akun Admin Tetap Anda Di Sini, Bos! (Ganti sesuai keinginan Anda)
-    if (email === "akangmotor@gmail.com" && password === "akang123") {
-        alert("Selamat Datang Kembali, Akang Motor!");
+    // 1. Ubah password yang diketik menjadi kode acak SHA-256
+    const passwordTerenkripsi = CryptoJS.SHA256(passwordInput).toString();
+
+    const emailSah = "akangmotor@gmail.com";
+    const passwordHashSah = "9621376e1081b9549f6df8497645065a9b706c99ec2446f2c69b936d8d85ed0f"; 
+
+    // 2. Validasi Kunci Masuk
+    if (email === emailSah && passwordTerenkripsi === passwordHashSah) {
+        alert("Akses Diterima! Selamat Datang Kembali, Akang Motor.");
+        
+        // KUNCI UTAMA: Simpan password asli ke memori global HP agar tidak hilang saat upload foto
+        passwordAdminAktif = passwordInput; 
+        
         tutupLoginAdmin();
+        
+        // Bersihkan form input fisik demi keamanan privasi di layar
+        document.getElementById('adminEmail').value = '';
+        document.getElementById('adminPassword').value = '';
+        
+        // Buka panel kontrol utama admin
         document.getElementById('adminPanelModal').style.setProperty('display', 'block', 'important');
         loadDataKhususAdmin();
     } else {
-        alert("Email atau Password salah, Bos! Jangan coba-coba masuk kamar rahasia ya.");
+        alert("Akses Ditolak! Email atau Password salah.");
     }
 }
 
 function keluarModeAdmin() {
+    passwordAdminAktif = ""; // Hancurkan kunci memori saat keluar demi keamanan!
     document.getElementById('adminPanelModal').style.setProperty('display', 'none', 'important');
 }
 
@@ -1461,12 +1481,12 @@ function openGallery() {
     });
 }
 
-// --- PERBAIKAN TOTAL JALUR AMAN UPLOAD IMGBB (ANTI FAILED TO FETCH) ---
+// --- PERBAIKAN JALUR UPLOAD IMGBB DENGAN MEMORI KUNCI GLOBAL RAHASIA ---
 function previewDanUploadFoto(input) {
     if (input.files && input.files.length > 0) {
         
-        // Ambil password dari form login untuk mendekripsi API Key imgBB
-        const kunciDekripsi = document.getElementById('adminPassword').value.trim();
+        // PERBAIKAN UTAMA: Mengambil kunci dari memori global, bukan dari kotak input bodi yang kosong
+        const kunciDekripsi = passwordAdminAktif;
         
         // Kunci Rahasia Berbasis AES-256 milik API Key imgBB Anda (Tetap aman dipajang di GitHub)
         const apiKeyTerkunci = "U2FsdGVkX19BdmU2Q2Fna2EwL0Y3Z0R0TkhRREd2TmV6cDFaOHMwOVR5cm1RWWtxKzdaNFBpUE83Rnlid1l6QVU="; 
@@ -1483,7 +1503,7 @@ function previewDanUploadFoto(input) {
             return;
         }
         
-        // PERBAIKAN UTAMA: Mengambil objek file pertama secara spesifik (index 0)
+        // Mengambil objek file pertama secara spesifik (index 0)
         const fileAman = input.files[0]; 
         
         const formData = new FormData();
@@ -1519,11 +1539,10 @@ function previewDanUploadFoto(input) {
             }
         })
         .catch(err => { 
-            // Menangkap error jika koneksi atau data ditolak server
             alert("Terjadi gangguan koneksi: " + err.message); 
         });
     }
- }      
+}
  </script>
 </body>
 </html>
