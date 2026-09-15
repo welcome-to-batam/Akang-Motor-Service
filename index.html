@@ -360,6 +360,75 @@ header {
 }
 .btn-submit-review:active { background-color: #b71c1c; }
 
+        /* --- PERBAIKAN RUANG VIP FORMULIR ULASAN (ANTI BERDESAKAN) --- */
+.review-form-container {
+    background-color: #2a2a2a !important; /* Sewarna dengan kartu bawah */
+    padding: 25px 20px !important;       /* Memberikan ruang napas di dalam kotak besar */
+    border-radius: 12px !important;
+    margin-top: 20px !important;         /* Jarak dari teks "Tulis Ulasan Anda" di atasnya */
+    margin-bottom: 25px !important;      /* Jarak ke kartu ulasan bawah */
+    border: 1px solid #444 !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+}
+
+/* Kotak Input Nama Anda */
+.review-form-container input[type="text"] {
+    width: 100% !important;
+    background-color: #1e1e1e !important;
+    border: 1px solid #444 !important;
+    border-radius: 8px !important;
+    padding: 12px 15px !important;       /* Membuat kotak nama lebih tebal dan luas */
+    color: #ffffff !important;
+    font-size: 14px !important;
+    margin-bottom: 20px !important;      /* JALUR EVAKUASI: Jarak aman ke area bintang bawahnya */
+    display: block !important;
+}
+
+/* Area Bintang Kejora */
+.star-rating-input {
+    text-align: center !important;
+    margin-bottom: 20px !important;      /* JALUR EVAKUASI: Jarak aman ke kotak tulisan ulasan bawahnya */
+    font-size: 32px !important;          /* Memperbesar sedikit ukuran bintang agar mudah ditekan jari */
+    cursor: pointer !important;
+    display: block !important;
+}
+
+/* Kotak Tulis Pengalaman Servis */
+.review-form-container textarea {
+    width: 100% !important;
+    background-color: #1e1e1e !important;
+    border: 1px solid #444 !important;
+    border-radius: 8px !important;
+    padding: 15px !important;            /* Memberikan ruang ketik yang sangat lega di dalam kotak */
+    color: #ffffff !important;
+    font-size: 14px !important;
+    margin-bottom: 25px !important;      /* JALUR EVAKUASI: Jarak aman sebelum menyentuh tombol merah */
+    display: block !important;
+    line-height: 1.5 !important;
+}
+
+/* Mengubah warna teks panduan (placeholder) agar abu-abu elegan */
+.review-form-container input[type="text"]::placeholder, 
+.review-form-container textarea::placeholder {
+    color: #777777 !important;
+}
+
+/* Tombol Kirim Ulasan Merah */
+.btn-submit-review {
+    width: 100% !important;
+    background-color: #d32f2f !important;
+    color: white !important;
+    border: none !important;
+    padding: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-size: 15px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    box-shadow: 0 4px 6px rgba(211, 47, 47, 0.3) !important;
+}  
+
     /* --- KODE KUNCI UNTUK MENGHANCURKAN WARNA PUTIH PADA KOTAK NAMA & ISI --- */
 .review-form-container {
     background-color: #2a2a2a !important; /* Kotak besar atas jadi abu gelap */
