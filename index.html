@@ -1461,45 +1461,69 @@ function openGallery() {
     });
 }
 
-// --- PROSES UPLOAD FOTO RAHASIA DIRECT KE IMGBB GRATIS (32GB) ---
+// --- PERBAIKAN TOTAL JALUR AMAN UPLOAD IMGBB (ANTI FAILED TO FETCH) ---
 function previewDanUploadFoto(input) {
-    if (input.files && input.files[0]) {
-        // GANTI INI: Masukkan API Key asli yang Anda salin dari web imgBB
-        const apiKeyTerkunci = "U2FsdGVkX19BdmU2Q2Fna2EwL0Y3Z0R0TkhRREd2TmV6cDFaOHMwOVR5cm1RWWtxKzdaNFBpUE83Rnlid1l6QVU=";
+    if (input.files && input.files.length > 0) {
         
-        const file = input.files[0];
+        // Ambil password dari form login untuk mendekripsi API Key imgBB
+        const kunciDekripsi = document.getElementById('adminPassword').value.trim();
+        
+        // Kunci Rahasia Berbasis AES-256 milik API Key imgBB Anda (Tetap aman dipajang di GitHub)
+        const apiKeyTerkunci = "U2FsdGVkX19BdmU2Q2Fna2EwL0Y3Z0R0TkhRREd2TmV6cDFaOHMwOVR5cm1RWWtxKzdaNFBpUE83Rnlid1l6QVU="; 
+
+        let API_KEY_IMGBB = "";
+        try {
+            // Membuka gembok API Key secara rahasia di dalam memori HP
+            const bytes = CryptoJS.AES.decrypt(apiKeyTerkunci, kunciDekripsi);
+            API_KEY_IMGBB = bytes.toString(CryptoJS.enc.Utf8);
+            
+            if (!API_KEY_IMGBB) { throw new Error(); }
+        } catch (e) {
+            alert("Gagal memvalidasi jalur aman! Silakan login admin ulang, Bos.");
+            return;
+        }
+        
+        // PERBAIKAN UTAMA: Mengambil objek file pertama secara spesifik (index 0)
+        const fileAman = input.files[0]; 
+        
         const formData = new FormData();
-        formData.append("image", file);
+        formData.append("image", fileAman); // Mengirim file asli tunggal yang sah ke imgBB
 
-        alert("Sedang mengunggah foto ke server imgBB, mohon tunggu kejutan sekejap, Bos...");
+        alert("Sedang mengunggah foto ke server imgBB lewat jalur aman, mohon tunggu kejutan sekejap, Bos...");
 
-        // Tembak foto langsung ke server API imgBB secara gratis
+        // Mengirim data ke server API imgBB secara gratis
         fetch(`https://imgbb.com{API_KEY_IMGBB}`, {
             method: "POST",
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Respon server bermasalah (Status: " + response.status + ")");
+            }
+            return response.json();
+        })
         .then(result => {
             if (result.success) {
-                // Ambil link URL foto asli yang sudah jadi dari imgBB
                 const linkFotoUrl = result.data.url;
-
-                // Simpan hanya LINK TEKS-nya saja ke Firebase (Sangat Hemat Memori, Anti Jebol!)
+                
+                // Menyimpan alamat tautan pendek ke Firebase Realtime Database
                 database.ref('galeri').push().set({
-                    fotoBase64: linkFotoUrl, // Kita pertahankan nama variabel 'fotoBase64' agar tidak perlu merombak HTML depan
+                    fotoBase64: linkFotoUrl,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
-                    alert("Keren Bos! Foto sukses terupload ke imgBB dan langsung tampil di PWA depan!");
+                    alert("Keren Bos! Foto sukses terupload ke imgBB dan langsung nampil di PWA depan!");
+                    document.getElementById('galleryFileInput').value = ""; // Reset input file setelah berhasil
                 });
             } else {
                 alert("Gagal upload ke imgBB: " + result.error.message);
             }
         })
-        .catch(err => {
-            alert("Terjadi gangguan koneksi: " + err.message);
+        .catch(err => { 
+            // Menangkap error jika koneksi atau data ditolak server
+            alert("Terjadi gangguan koneksi: " + err.message); 
         });
     }
-}
-    </script>
+ }      
+ </script>
 </body>
 </html>
