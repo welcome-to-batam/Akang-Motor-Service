@@ -698,6 +698,40 @@ header {
     display: block; text-decoration: none; text-align: center; background-color: #d32f2f; color: white; padding: 14px; font-size: 15px; font-weight: 600; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 6px rgba(211, 47, 47, 0.3); transition: 0.2s;
 }
 .btn-claim-promo:active { background-color: #b71c1c; transform: scale(0.98); }
+
+        /* --- CSS ADMIN PANEL RAHASIA --- */
+.admin-login-modal {
+    position: fixed !important; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.85); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.login-content { background-color: #2a2a2a; border: 1px solid #d32f2f; border-radius: 12px; padding: 30px 20px; width: 100%; max-width: 360px; text-align: center; }
+.login-content input { width: 100%; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; padding: 12px; color: #fff; margin-bottom: 15px; }
+
+.admin-panel-modal {
+    position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important;
+    background-color: #121212 !important; z-index: 9999 !important; display: none !important; overflow-y: auto !important;
+}
+.admin-header-fixed { position: sticky; top: 0; background-color: #1a1a1a; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #d32f2f; z-index: 100; }
+.admin-header-fixed h2 { font-size: 18px; color: #fff; font-weight: 700; }
+.btn-logout-admin { background-color: #d32f2f; color: white; border: none; padding: 8px 15px; font-size: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; }
+
+.admin-panel-content { max-width: 500px; margin: 20px auto; padding: 0 20px 40px 20px; }
+.admin-section-title { font-size: 14px; font-weight: 700; color: #d32f2f; margin: 25px 0 15px 0; border-left: 4px solid #fff; padding-left: 10px; text-transform: uppercase; }
+
+/* Item Moderasi Admin */
+.admin-list-container { display: flex; flex-direction: column; gap: 12px; }
+.admin-review-item { background-color: #2a2a2a; border: 1px solid #444; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.admin-review-info { text-align: left; flex-grow: 1; }
+.btn-delete-item { background-color: #ea4335; color: white; border: none; padding: 10px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; flex-shrink: 0; }
+.btn-delete-item:active { background-color: #d93025; }
+
+/* Grid Galeri Admin */
+.admin-upload-box { background-color: #1a1a1a; border: 1px dashed #d32f2f; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 15px; }
+.admin-upload-box h3 { font-size: 14px; color: #fff; margin-bottom: 5px; }
+.admin-gallery-grid-control { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.admin-gallery-card { background-color: #2a2a2a; border: 1px solid #444; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+.admin-gallery-card img { width: 100%; height: 110px; object-fit: cover; }
+.admin-gallery-card .btn-delete-item { width: 100%; border-radius: 0; }
     </style>
 </head>
 <body>
@@ -705,7 +739,7 @@ header {
     <!-- HEADER -->
     <header>
         <div class="logo-container">
-            <img src="logo.png" alt="Logo Akang Motor">
+            <img src="logo.png" alt="Logo Akang Motor" onclick="ketukLogoAdmin()">
         </div>
         <button class="menu-hamburger" onclick="toggleMenu()">☰</button>
     </header>
@@ -1064,6 +1098,47 @@ header {
     </div>
 </div>
 
+    <!-- MODAL LOGIN ADMIN RAHASIA -->
+<div id="adminLoginModal" class="admin-login-modal">
+    <div class="login-content">
+        <h2>PINTU MASUK AKANG</h2>
+        <div class="red-line"></div>
+        <p style="font-size: 13px; color: #aaa; margin-bottom: 20px;">Khusus internal Akang Motor</p>
+        <input type="email" id="adminEmail" placeholder="Email Admin" required>
+        <input type="password" id="adminPassword" placeholder="Password Admin" required>
+        <button class="btn-submit-review" onclick="prosesLoginAdmin()">MASUK MODE ADMIN</button>
+        <button style="background: none; border: none; color: #777; margin-top: 15px; cursor: pointer;" onclick="tutupLoginAdmin()">Batal</button>
+    </div>
+</div>
+
+<!-- MODAL PANEL UTAMA ADMIN (FULL SCREEN) -->
+<div id="adminPanelModal" class="admin-panel-modal">
+    <div class="admin-header-fixed">
+        <h2>PANEL ADMIN AKANG</h2>
+        <button class="btn-logout-admin" onclick="keluarModeAdmin()">KELUAR ADMIN</button>
+    </div>
+    
+    <div class="admin-panel-content">
+        <!-- SEKTOR 1: KONTROL ULASAN PELANGGAN -->
+        <div class="admin-section-title">🛑 MODERASI ULASAN NEGATIF</div>
+        <div id="adminReviewList" class="admin-list-container">
+            <!-- Daftar ulasan dengan tombol hapus akan muncul di sini -->
+        </div>
+
+        <!-- SEKTOR 2: KONTROL KELOLA GALERI -->
+        <div class="admin-section-title">📸 KELOLA & UPLOAD GALERI</div>
+        <div class="admin-upload-box">
+            <h3>Tambah Foto Baru ke Galeri</h3>
+            <p style="font-size: 11px; color: #888; margin-bottom: 10px;">Pilih foto dari galeri HP Anda untuk langsung ditampilkan di web.</p>
+            <input type="file" id="galleryFileInput" accept="image/*" style="display: none;" onchange="previewDanUploadFoto(this)">
+            <button class="btn-submit-review" onclick="document.getElementById('galleryFileInput').click()">PILIH & UPLOAD FOTO</button>
+        </div>
+        <div id="adminGalleryList" class="admin-gallery-grid-control">
+            <!-- Daftar foto galeri dengan tombol hapus akan muncul di sini -->
+        </div>
+    </div>
+</div>
+
 <!-- ✅ SDK Realtime Database -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -1265,6 +1340,165 @@ function closeContact() {
 }
 function closePromo() {
     document.getElementById('promoModal').style.setProperty('display', 'none', 'important');
+}
+
+    // --- SISTEM DETEKSI KETUK 5 KALI LOGO RAHASIA ---
+let hitungKetukan = 0;
+let waktuKetukanTerakhir = 0;
+
+function ketukLogoAdmin() {
+    const waktuSekarang = new Date().getTime();
+    // Jika jarak ketukan lebih dari 1.5 detik, reset hitungan dari nol lagi
+    if (waktuSekarang - waktuKetukanTerakhir > 1500) { hitungKetukan = 0; }
+    
+    hitungKetukan++;
+    waktuKetukanTerakhir = waktuSekarang;
+
+    if (hitungKetukan === 5) {
+        hitungKetukan = 0; // reset
+        document.getElementById('adminLoginModal').style.display = 'flex'; // Munculkan form login
+    }
+}
+
+function tutupLoginAdmin() { document.getElementById('adminLoginModal').style.display = 'none'; }
+
+// --- PROSES AUTHENTICATION LOGIN ADMIN ---
+function prosesLoginAdmin() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value.trim();
+
+    // Atur Akun Admin Tetap Anda Di Sini, Bos! (Ganti sesuai keinginan Anda)
+    if (email === "akangmotor@gmail.com" && password === "akang123") {
+        alert("Selamat Datang Kembali, Akang Motor!");
+        tutupLoginAdmin();
+        document.getElementById('adminPanelModal').style.setProperty('display', 'block', 'important');
+        loadDataKhususAdmin();
+    } else {
+        alert("Email atau Password salah, Bos! Jangan coba-coba masuk kamar rahasia ya.");
+    }
+}
+
+function keluarModeAdmin() {
+    document.getElementById('adminPanelModal').style.setProperty('display', 'none', 'important');
+}
+
+// --- LOGIKA UTAMA MANAJEMEN DATA ADMIN ---
+function loadDataKhususAdmin() {
+    // 1. Tarik Data Ulasan untuk Dimoderasi Admin
+    database.ref('ulasan').on('value', (snapshot) => {
+        const container = document.getElementById('adminReviewList');
+        container.innerHTML = '';
+        if(!snapshot.exists()) { container.innerHTML = '<p style="color:#666; font-size:12px;">Tidak ada ulasan.</p>'; return; }
+        
+        snapshot.forEach((child) => {
+            const key = child.key;
+            const data = child.val();
+            container.innerHTML += `
+                <div class="admin-review-item">
+                    <div class="admin-review-info">
+                        <strong style="font-size:13px; color:#fff;">${data.nama} (${data.rating}⭐)</strong>
+                        <p style="font-size:12px; color:#bbb; font-style:italic;">"${data.teks}"</p>
+                    </div>
+                    <button class="btn-delete-item" onclick="hapusUlasanPelanggan('${key}')">HAPUS</button>
+                </div>
+            `;
+        });
+    });
+
+    // 2. Tarik Data Galeri Foto dari Firebase untuk Dimoderasi Admin
+    database.ref('galeri').on('value', (snapshot) => {
+        const container = document.getElementById('adminGalleryList');
+        container.innerHTML = '';
+        if(!snapshot.exists()) { container.innerHTML = '<p style="color:#666; font-size:12px;">Belum ada foto di upload.</p>'; return; }
+        
+        snapshot.forEach((child) => {
+            const key = child.key;
+            const data = child.val();
+            container.innerHTML += `
+                <div class="admin-gallery-card">
+                    <img src="${data.fotoBase64}">
+                    <button class="btn-delete-item" onclick="hapusFotoGaleri('${key}')">HAPUS FOTO</button>
+                </div>
+            `;
+        });
+    });
+}
+
+// --- FUNGSI EKSEKUSI HAPUS DATA DARI FIREBASE CLOUD ---
+function hapusUlasanPelanggan(key) {
+    if(confirm("Apakah Anda yakin mau menghapus ulasan ini selamanya, Bos?")) {
+        database.ref('ulasan').child(key).remove().then(() => { alert("Ulasan kotor berhasil dibasmi!"); });
+    }
+}
+
+function hapusFotoGaleri(key) {
+    if(confirm("Hapus foto ini dari galeri depan, Bos?")) {
+        database.ref('galeri').child(key).remove().then(() => { alert("Foto berhasil dihapus!"); });
+    }
+}
+
+// --- SINKRONISASI AREA DEPAN AGAR BISA MEMBACA FOTO TERUPLOAD SECARA OTOMATIS ---
+// Silakan timpa fungsi openGallery bawaan Anda sebelumnya dengan baris penarik data Firebase ini
+function openGallery() {
+    toggleMenu();
+    document.getElementById('galleryModal').style.setProperty('display', 'block', 'important');
+    
+    database.ref('galeri').on('value', (snapshot) => {
+        const frontContainer = document.querySelector('#galleryModal .gallery-grid');
+        frontContainer.innerHTML = ''; // bersihkan data statis github jaman dulu
+        
+        if(!snapshot.exists()) { frontContainer.innerHTML = '<p style="color:#666; text-align:center; width:100%;">Galeri masih kosong.</p>'; return; }
+        
+        snapshot.forEach((child) => {
+            const data = child.val();
+            frontContainer.innerHTML += `
+                <div class="gallery-item">
+                    <img src="${data.fotoBase64}">
+                    <div class="gallery-tag">SERVIS</div>
+                </div>
+            `;
+        });
+    });
+}
+
+// --- PROSES UPLOAD FOTO RAHASIA DIRECT KE IMGBB GRATIS (32GB) ---
+function previewDanUploadFoto(input) {
+    if (input.files && input.files[0]) {
+        // GANTI INI: Masukkan API Key asli yang Anda salin dari web imgBB
+        const API_KEY_IMGBB = "ISI_API_KEY_IMGBB_ANDA_DI_SINI"; 
+        
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
+
+        alert("Sedang mengunggah foto ke server imgBB, mohon tunggu kejutan sekejap, Bos...");
+
+        // Tembak foto langsung ke server API imgBB secara gratis
+        fetch(`https://imgbb.com{API_KEY_IMGBB}`, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                // Ambil link URL foto asli yang sudah jadi dari imgBB
+                const linkFotoUrl = result.data.url;
+
+                // Simpan hanya LINK TEKS-nya saja ke Firebase (Sangat Hemat Memori, Anti Jebol!)
+                database.ref('galeri').push().set({
+                    fotoBase64: linkFotoUrl, // Kita pertahankan nama variabel 'fotoBase64' agar tidak perlu merombak HTML depan
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    alert("Keren Bos! Foto sukses terupload ke imgBB dan langsung tampil di PWA depan!");
+                });
+            } else {
+                alert("Gagal upload ke imgBB: " + result.error.message);
+            }
+        })
+        .catch(err => {
+            alert("Terjadi gangguan koneksi: " + err.message);
+        });
+    }
 }
     </script>
 </body>
