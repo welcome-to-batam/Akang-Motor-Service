@@ -662,6 +662,42 @@ header {
 .wa-btn:active { background-color: #1ebd58; }
 .email-btn { background-color: #ea4335; } /* Warna merah khas Gmail */
 .email-btn:active { background-color: #d93025; }
+
+        /* --- GAYA TAMPILAN PROMO AKANG MOTOR --- */
+.promo-modal {
+    position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important;
+    background-color: #121212 !important; z-index: 300 !important; display: none !important; overflow-y: auto !important; padding: 30px 20px !important;
+}
+.close-promo-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #ffffff; font-size: 28px; cursor: pointer; }
+.close-promo-btn:hover { color: #d32f2f; }
+.promo-content { max-width: 500px; margin: 40px auto 0 auto; text-align: center; }
+.promo-content h2 { font-size: 24px; font-weight: 700; letter-spacing: 1px; color: #ffffff; }
+.promo-content .red-line { width: 60px; height: 3px; background-color: #d32f2f; margin: 10px auto 15px auto; }
+.promo-subtitle { font-size: 13px; color: #cccccc; margin-bottom: 25px; line-height: 1.5; }
+
+/* Kartu Promo */
+.promo-list { margin-bottom: 30px; }
+.promo-card {
+    background-color: #2a2a2a; border: 1px solid #444; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: left; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.promo-card h3 { font-size: 16px; color: #ffffff; margin-bottom: 6px; font-weight: 700; }
+.promo-desc { font-size: 13px; color: #cccccc; line-height: 1.5; margin-bottom: 12px; }
+
+/* Label Pojok Promo */
+.promo-badge { position: absolute; top: 15px; right: 15px; background-color: #d32f2f; color: white; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+.promo-badge-blue { position: absolute; top: 15px; right: 15px; background-color: #1976d2; color: white; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+
+/* Harga Coret */
+.promo-price { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.old-price { font-size: 13px; color: #777777; text-decoration: line-through; }
+.new-price { font-size: 18px; color: #25d366; font-weight: 700; } /* Warna hijau sukses */
+.promo-expired { font-size: 11px; color: #888888; font-style: italic; }
+
+/* Tombol Ambil Promo */
+.btn-claim-promo {
+    display: block; text-decoration: none; text-align: center; background-color: #d32f2f; color: white; padding: 14px; font-size: 15px; font-weight: 600; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 6px rgba(211, 47, 47, 0.3); transition: 0.2s;
+}
+.btn-claim-promo:active { background-color: #b71c1c; transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -826,7 +862,7 @@ header {
 
     <!-- TOMBOL BOOKING UTAMA -->
     <div class="cta-container">
-        <button class="btn-booking" onclick="alert('🛵🏍️FITUR PROMO AKANG MOTOR BELUM TERSEDIA!🏍️🛵')">PROMO Akang Motor</button>
+    <button class="btn-booking" onclick="openPromo()">PROMO Akang Motor</button>
     </div>
     
 </div>
@@ -979,6 +1015,51 @@ header {
             <p>Kirim pertanyaan resmi atau kerja sama bisnis.</p>
             <!-- Ganti dengan email asli bengkel Anda -->
             <a href="mailto:masgondrong@://gmail.com" class="contact-link-btn email-btn">Kirim ke Gmail</a>
+        </div>
+    </div>
+</div>
+
+    <!-- MODAL FULL SCREEN: PROMO AKANG MOTOR -->
+<div id="promoModal" class="promo-modal">
+    <button class="close-promo-btn" onclick="closePromo()">✕</button>
+    
+    <div class="promo-content">
+        <h2>PROMO AKANG MOTOR</h2>
+        <div class="red-line"></div>
+        <p class="promo-subtitle">"Rawat Motor Kesayangan Tanpa Bikin Kantong Jebol. Cek Promo Menarik Bulan Ini!"</p>
+
+        <!-- DAFTAR KARTU PROMO -->
+        <div class="promo-list">
+            
+            <!-- PROMO 1 -->
+            <div class="promo-card">
+                <div class="promo-badge">HOT PROMO</div>
+                <h3>🛢️ PAKET SERVIS GAJIAN</h3>
+                <p class="promo-desc">Tune Up lengkap + Ganti Oli Mesin Prima + Pembersihan Karburator/CVT.</p>
+                <div class="promo-price">
+                    <span class="old-price">Rp 150.000</span>
+                    <span class="new-price">Rp 115.000</span>
+                </div>
+                <span class="promo-expired">*Berlaku s/d Akhir Bulan Ini</span>
+            </div>
+
+            <!-- PROMO 2 -->
+            <div class="promo-card">
+                <div class="promo-badge-blue">GRATIS</div>
+                <h3>🔍 CEK KESEHATAN MOTOR</h3>
+                <p class="promo-desc">Setiap servis atau ganti oli jenis apa saja, GRATIS Diagnosa & Cek Kelistrikan, Rem, serta Tekanan Ban.</p>
+                <div class="promo-price">
+                    <span class="new-price">FREE / Rp 0</span>
+                </div>
+                <span class="promo-expired">*Khusus Booking lewat WhatsApp</span>
+            </div>
+
+        </div>
+
+        <!-- TOMBOL AKSI UTAMA DI DALAM PROMO -->
+        <div class="promo-action-container">
+            <!-- Tautan langsung menuju WhatsApp admin untuk klaim promo -->
+            <a href="https://wa.me" target="_blank" class="btn-claim-promo">Ambil Promo Lewat WA</a>
         </div>
     </div>
 </div>
@@ -1178,6 +1259,13 @@ function closeContact() {
                     .catch(err => console.log('Gagal', err));
             });
         }
+
+    function openPromo() {
+    document.getElementById('promoModal').style.setProperty('display', 'block', 'important');
+}
+function closePromo() {
+    document.getElementById('promoModal').style.setProperty('display', 'none', 'important');
+}
     </script>
 </body>
 </html>
