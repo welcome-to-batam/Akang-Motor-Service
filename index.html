@@ -1139,6 +1139,12 @@ header {
     </div>
 </div>
 
+    <script>
+  window.onerror = function(pesan, sumber, baris) {
+    alert("ERROR: " + pesan + "\nBaris: " + baris);
+  };
+    </script>
+
 <!-- ✅ SDK Realtime Database -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
