@@ -1377,11 +1377,8 @@ function prosesLoginAdmin() {
     const email = document.getElementById('adminEmail').value.trim();
     const passwordInput = document.getElementById('adminPassword').value.trim();
 
-    const passwordTerenkripsi = CryptoJS.SHA256(passwordInput).toString();
-alert("DEBUG HASH: " + passwordTerenkripsi);  // ← TAMBAHKAN INI (sementara)
-
     const emailSah = "akangmotor@gmail.com";
-    const passwordHashSah = "9621376e1081b9549f6df8497645065a9b706c99ec2446f2c69b936d8d85ed0f"; 
+    const passwordHashSah = "a27d3d191b9d5a6851d5638867430d549de1bcc1cc85f6ab3c3690bcfc7671c6"; 
 
     // 2. Validasi Kunci Masuk
     if (email === emailSah && passwordTerenkripsi === passwordHashSah) {
