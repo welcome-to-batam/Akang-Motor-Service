@@ -1380,9 +1380,6 @@ function prosesLoginAdmin() {
     const passwordTerenkripsi = CryptoJS.SHA256(passwordInput).toString();
 alert("DEBUG HASH: " + passwordTerenkripsi);  // ← TAMBAHKAN INI (sementara)
 
-    // 1. Ubah password yang diketik menjadi kode acak SHA-256
-    const passwordTerenkripsi = CryptoJS.SHA256(passwordInput).toString();
-
     const emailSah = "akangmotor@gmail.com";
     const passwordHashSah = "9621376e1081b9549f6df8497645065a9b706c99ec2446f2c69b936d8d85ed0f"; 
 
