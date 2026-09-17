@@ -1377,6 +1377,9 @@ function prosesLoginAdmin() {
     const email = document.getElementById('adminEmail').value.trim();
     const passwordInput = document.getElementById('adminPassword').value.trim();
 
+    const passwordTerenkripsi = CryptoJS.SHA256(passwordInput).toString();
+alert("DEBUG HASH: " + passwordTerenkripsi);  // ← TAMBAHKAN INI (sementara)
+
     // 1. Ubah password yang diketik menjadi kode acak SHA-256
     const passwordTerenkripsi = CryptoJS.SHA256(passwordInput).toString();
 
