@@ -1491,23 +1491,7 @@ function openGallery() {
 function previewDanUploadFoto(input) {
     if (input.files && input.files.length > 0) {
         
-        // PERBAIKAN UTAMA: Mengambil kunci dari memori global, bukan dari kotak input bodi yang kosong
-        const kunciDekripsi = passwordAdminAktif;
-        
-        // Kunci Rahasia Berbasis AES-256 milik API Key imgBB Anda (Tetap aman dipajang di GitHub)
-        const apiKeyTerkunci = "U2FsdGVkX19BdmU2Q2Fna2EwL0Y3Z0R0TkhRREd2TmV6cDFaOHMwOVR5cm1RWWtxKzdaNFBpUE83Rnlid1l6QVU="; 
-
-        let API_KEY_IMGBB = "";
-        try {
-            // Membuka gembok API Key secara rahasia di dalam memori HP
-            const bytes = CryptoJS.AES.decrypt(apiKeyTerkunci, kunciDekripsi);
-            API_KEY_IMGBB = bytes.toString(CryptoJS.enc.Utf8);
-            
-            if (!API_KEY_IMGBB) { throw new Error(); }
-        } catch (e) {
-            alert("Gagal memvalidasi jalur aman! Silakan login admin ulang, Bos.");
-            return;
-        }
+        const API_KEY_IMGBB = "4f6836fbae1524e5a36164197da82799";
         
         // Mengambil objek file pertama secara spesifik (index 0)
         const fileAman = input.files[0]; 
