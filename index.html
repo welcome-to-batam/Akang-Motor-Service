@@ -1487,50 +1487,47 @@ function openGallery() {
     });
 }
 
-// --- PERBAIKAN JALUR UPLOAD IMGBB DENGAN MEMORI KUNCI GLOBAL RAHASIA ---
+// --- UPLOAD FOTO: KOMPRES + SIMPAN LANGSUNG KE FIREBASE ---
 function previewDanUploadFoto(input) {
     if (input.files && input.files.length > 0) {
-        
-        const API_KEY_IMGBB = "4f6836fbae1524e5a36164197da82799";
-        
-        // Mengambil objek file pertama secara spesifik (index 0)
-        const fileAman = input.files[0]; 
-        
-        const formData = new FormData();
-        formData.append("image", fileAman); // Mengirim file asli tunggal yang sah ke imgBB
 
-        alert("Sedang mengunggah foto ke server imgBB lewat jalur aman, mohon tunggu kejutan sekejap, Bos...");
+        const file = input.files[0];
+        alert("Sedang memproses foto, mohon tunggu sebentar, Bos...");
 
-        // Mengirim data ke server API imgBB secara gratis
-        fetch(`https://api.imgbb.com/1/upload?key=${API_KEY_IMGBB}`, {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Respon server bermasalah (Status: " + response.status + ")");
-            }
-            return response.json();
-        })
-        .then(result => {
-            if (result.success) {
-                const linkFotoUrl = result.data.url;
-                
-                // Menyimpan alamat tautan pendek ke Firebase Realtime Database
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                // Kompres: sisi terpanjang maksimal 1200px, kualitas 70%
+                const MAX = 1200;
+                let w = img.width, h = img.height;
+                if (w > MAX || h > MAX) {
+                    const r = Math.min(MAX / w, MAX / h);
+                    w = Math.round(w * r);
+                    h = Math.round(h * r);
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
                 database.ref('galeri').push().set({
-                    fotoBase64: linkFotoUrl,
+                    fotoBase64: dataUrl,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
-                    alert("Keren Bos! Foto sukses terupload ke imgBB dan langsung nampil di PWA depan!");
-                    document.getElementById('galleryFileInput').value = ""; // Reset input file setelah berhasil
+                    alert("Keren Bos! Foto sukses terupload dan tampil di galeri!");
+                    document.getElementById('galleryFileInput').value = "";
+                }).catch(err => {
+                    alert("Gagal simpan ke database: " + err.message);
                 });
-            } else {
-                alert("Gagal upload ke imgBB: " + result.error.message);
-            }
-        })
-        .catch(err => { 
-            alert("Terjadi gangguan koneksi: " + err.message); 
-        });
+            };
+            img.onerror = function() {
+                alert("File ini bukan gambar yang valid, Bos.");
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
     }
 }
  </script>
