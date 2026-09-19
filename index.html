@@ -740,14 +740,16 @@ header {
 
   /* Container animasi terpisah */
   #masGondrongAnimation {
-    position: fixed; /* tetap di posisi layar */
-    bottom: 0; /* bisa diubah sesuai kebutuhan */
+    position: fixed;
+    bottom: 0;
     right: 20px;
     width: 320px;
     height: 320px;
-    pointer-events: none; /* agar tidak menghalangi klik */
-    background: transparent; /* mengikuti background halaman */
+    pointer-events: none;
+    background: transparent;
     z-index: 9999;
+    transition: opacity 0.5s ease;
+    opacity: 1; /* awalnya tampil */
   }
 
   /* Canvas untuk animasi api */
@@ -947,8 +949,9 @@ header {
 
     <!-- Logo Mas Gondrong Container animasi -->
 <div id="masGondrongAnimation">
-  <canvas id="fireCanvas" width="320" height="320"></canvas>
-  <img src="mas_gondrong.png" alt="Mas Gondrong" class="photo" />
+  <!-- Isi animasi kamu di sini -->
+  <canvas id="fireCanvas" width="320" height="320" style="border-radius: 50%;"></canvas>
+  <img src="mas_gondrong.png" alt="Mas Gondrong" class="photo" style="position: absolute; top: 50%; left: 50%; width: 280px; height: 280px; border-radius: 50%; transform: translate(-50%, -50%); object-fit: cover; box-shadow: 0 0 20px 5px rgba(255, 140, 0, 0.8); z-index: 2;">
      </div>
     </div>
   </div>
@@ -1668,6 +1671,22 @@ function previewDanUploadFoto(input) {
   }
 
   animate();
+
+    let scrollTimeout;
+  const anim = document.getElementById('masGondrongAnimation');
+
+  window.addEventListener('scroll', () => {
+    // Saat scroll, sembunyikan animasi
+    anim.style.opacity = '0';
+
+    // Bersihkan timeout sebelumnya
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+
+    // Setelah 200ms tidak scroll, tampilkan animasi lagi
+    scrollTimeout = setTimeout(() => {
+      anim.style.opacity = '1';
+    }, 200);
+  });
  </script>
 </body>
 </html>
