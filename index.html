@@ -770,6 +770,26 @@ header {
     z-index: 2;
     pointer-events: auto; /* jika ingin foto bisa diinteraksi */
   }
+
+.btn-install {
+  display: none;           /* disembunyikan dulu, muncul otomatis jika bisa diinstall */
+  width: 100%;
+  max-width: 400px;
+  padding: 14px 20px;
+  margin: 20px auto;
+  background: #8b5e3c;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(139, 94, 60, 0.35);
+  cursor: pointer;
+}
+.btn-install:active {
+  transform: scale(0.97);
+}
     </style>
 </head>
 <body>
@@ -802,6 +822,10 @@ header {
 
     <!-- BACKGROUND FOTO MOTOR -->
     <div class="hero-banner"></div>
+
+    <button id="btnInstall" class="btn-install">
+  📲 Install Aplikasi
+</button>
 
     <!-- KETERANGAN & DESKRIPSI -->
     <div class="main-info">
@@ -1656,6 +1680,34 @@ function previewDanUploadFoto(input) {
       anim.style.opacity = '1';
     }, 2000);
   });
+
+    // ==========================================
+// 3. TOMBOL INSTALL CUSTOM
+// ==========================================
+let deferredPrompt;
+const btnInstall = document.getElementById('btnInstall');
+
+// Chrome mengizinkan install → simpan event & tampilkan tombol
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();          // cegah dialog bawaan muncul otomatis
+  deferredPrompt = e;
+  btnInstall.style.display = 'block';
+});
+
+// Saat tombol diklik → tampilkan dialog instal
+btnInstall.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log(outcome === 'accepted' ? '✅ User menginstall' : '❌ User menolak');
+  deferredPrompt = null;
+  btnInstall.style.display = 'none';
+});
+
+// Jika sudah terinstall → sembunyikan tombol selamanya
+window.addEventListener('appinstalled', () => {
+  btnInstall.style.display = 'none';
+});
 </script>
 </body>
 </html>
